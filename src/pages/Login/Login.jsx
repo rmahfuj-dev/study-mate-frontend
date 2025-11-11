@@ -4,6 +4,7 @@ import Container from "../../components/Container";
 import { AuthContext } from "../../contexts/AuthContext/AuthContext";
 import { toast } from "react-toastify";
 import { useLocation, useNavigate } from "react-router";
+import { Link } from "react-router";
 
 const Login = () => {
   const { googleSignIn, signInEmailPass } = useContext(AuthContext);
@@ -78,9 +79,9 @@ const Login = () => {
               </span>
             )}
 
-            <div className="text-sm text-right mt-2 text-blue-600 cursor-pointer">
+            <Link to="/forget-password" className="text-sm text-right mt-2 text-blue-600 cursor-pointer">
               Forget Password?
-            </div>
+            </Link>
 
             <input
               type="submit"

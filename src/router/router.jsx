@@ -6,6 +6,7 @@ import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
 import CreatePartnerProfile from "../pages/CreatePartnerProfile/CreatePartnerProfile";
 import MyConnecton from "../pages/MyConnection/MyConnecton";
+import ForgetPass from "../pages/ForgetPass/ForgetPass";
 
 export const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ export const router = createBrowserRouter([
       {
         path: "my-connections",
         element: <MyConnecton />,
+      },
+      {
+        path: "forget-password",
+        element: <ForgetPass />,
       },
     ],
   },
