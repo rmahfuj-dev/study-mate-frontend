@@ -14,7 +14,11 @@ const Register = () => {
   const handleLogin = (data) => {
     const email = data.Email;
     const password = data.Password;
-    createUserWithEmailPass();
+    createUserWithEmailPass(email, password)
+      .then((res) => {
+        console.log(res.user);
+      })
+      .catch((err) => console.log(err.message));
   };
   const googleLogin = () => {
     googleSignIn()
