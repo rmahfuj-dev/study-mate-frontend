@@ -7,6 +7,7 @@ import { getAuth, signOut } from "firebase/auth";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
   const { user } = useContext(AuthContext);
   const auth = getAuth();
 
@@ -40,58 +41,38 @@ const Header = () => {
         </NavLink>
       </li>
 
-      {/* Mobile Auth Buttons */}
-      {!user ? (
+      {!user ? null : (
         <>
-          <li className="md:hidden">
+          <li>
             <NavLink
-              to="/login"
+              to="/create-partner"
               className={({ isActive }) =>
                 isActive ? "font-bold text-primary" : undefined
               }
               onClick={() => setIsOpen(false)}
             >
-              Login
+              Create Partner Profile
             </NavLink>
           </li>
-          <li className="md:hidden">
+          <li>
             <NavLink
-              to="/register"
+              to="/my-connections"
               className={({ isActive }) =>
                 isActive ? "font-bold text-primary" : undefined
               }
               onClick={() => setIsOpen(false)}
             >
-              Register
+              My Connections
             </NavLink>
           </li>
         </>
-      ) : (
-        <li className="md:hidden">
-          <button
-            onClick={() => {
-              handleLogout();
-              setIsOpen(false);
-            }}
-            className="btn btn-sm btn-error text-white"
-          >
-            Logout
-          </button>
-        </li>
       )}
-
-      <li>
-        <div className="md:hidden">
-          <ThemeToggle />
-        </div>
-      </li>
     </>
   );
 
   return (
     <header className="shadow-sm bg-base-200">
       <div className="navbar px-4 justify-between">
-        {/* Logo */}
         <div className="flex items-center gap-2">
           <Link to="/" className="flex items-center gap-2">
             <Logo className="w-12 sm:w-16 text-current" />
@@ -101,14 +82,11 @@ const Header = () => {
           </Link>
         </div>
 
-        {/* Desktop Links */}
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">{links}</ul>
         </div>
 
-        {/* Right Side */}
         <div className="flex items-center gap-2">
-          {/* Desktop Auth Buttons + Theme Toggle */}
           <div className="hidden lg:flex items-center gap-3">
             {!user ? (
               <div className="space-x-2">
@@ -120,17 +98,42 @@ const Header = () => {
                 </NavLink>
               </div>
             ) : (
-              <button
-                onClick={handleLogout}
-                className="btn btn-error text-white"
-              >
-                Logout
-              </button>
+              <div className="relative">
+                <img
+                  src={user.photoURL || "/default-profile.png"}
+                  alt="Profile"
+                  className="w-10 h-10 rounded-full cursor-pointer"
+                  onClick={() => setProfileOpen(!profileOpen)}
+                />
+                {profileOpen && (
+                  <ul className="absolute right-0 mt-2 w-40 p-2 shadow-lg rounded-lg bg-base-100 flex flex-col gap-2 z-50">
+                    <li>
+                      <NavLink
+                        to="/profile"
+                        className="hover:bg-base-200 px-2 py-1 rounded"
+                        onClick={() => setProfileOpen(false)}
+                      >
+                        Profile
+                      </NavLink>
+                    </li>
+                    <li>
+                      <button
+                        onClick={() => {
+                          handleLogout();
+                          setProfileOpen(false);
+                        }}
+                        className="btn btn-sm btn-error text-white w-full"
+                      >
+                        Logout
+                      </button>
+                    </li>
+                  </ul>
+                )}
+              </div>
             )}
             <ThemeToggle />
           </div>
 
-          {/* Mobile Menu */}
           <div className="relative lg:hidden">
             <button
               className="btn btn-ghost"
@@ -155,6 +158,33 @@ const Header = () => {
             {isOpen && (
               <ul className="absolute right-0 mt-2 w-52 p-2 shadow-lg rounded-lg bg-base-100 flex flex-col gap-2 z-50">
                 {links}
+                {!user && (
+                  <>
+                    <li>
+                      <NavLink to="/login" onClick={() => setIsOpen(false)}>
+                        Login
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink to="/register" onClick={() => setIsOpen(false)}>
+                        Register
+                      </NavLink>
+                    </li>
+                  </>
+                )}
+                {user && (
+                  <li>
+                    <button
+                      onClick={() => {
+                        handleLogout();
+                        setIsOpen(false);
+                      }}
+                      className="btn btn-sm btn-error text-white w-full"
+                    >
+                      Logout
+                    </button>
+                  </li>
+                )}
               </ul>
             )}
           </div>

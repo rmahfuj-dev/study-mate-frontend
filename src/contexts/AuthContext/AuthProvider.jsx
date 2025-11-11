@@ -6,6 +6,8 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  updateCurrentUser,
+  updateProfile,
 } from "firebase/auth";
 import { auth } from "../../firebase/firebase.config";
 
@@ -30,14 +32,26 @@ const AuthProvider = ({ children }) => {
 
   // create user with email and passwrod
   const createUserWithEmailPass = (email, password) => {
-    return createUserWithEmailAndPassword(email, password);
+    return createUserWithEmailAndPassword(auth, email, password);
   };
 
   // sign in with email and passwrod
   const signInEmailPass = (email, password) => {
     return signInWithEmailAndPassword(auth, email, password);
   };
-  const authData = { googleSignIn, user, loading, createUserWithEmailPass,signInEmailPass };
+  // update profile
+  const updateData = (profileData) => {
+    const currentUser = auth.currentUser;
+    return updateProfile(currentUser, profileData);
+  };
+  const authData = {
+    googleSignIn,
+    user,
+    loading,
+    createUserWithEmailPass,
+    signInEmailPass,
+    updateData
+  };
   return <AuthContext value={authData}>{children}</AuthContext>;
 };
 
