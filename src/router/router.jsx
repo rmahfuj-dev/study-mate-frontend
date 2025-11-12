@@ -7,6 +7,7 @@ import Register from "../pages/Register/Register";
 import CreatePartnerProfile from "../pages/CreatePartnerProfile/CreatePartnerProfile";
 import MyConnecton from "../pages/MyConnection/MyConnecton";
 import ForgetPass from "../pages/ForgetPass/ForgetPass";
+import PartnerDetails from "../components/common/PartnerDetails";
 
 export const router = createBrowserRouter([
   {
@@ -38,6 +39,14 @@ export const router = createBrowserRouter([
       {
         path: "forget-password",
         element: <ForgetPass />,
+      },
+      {
+        path: "user/:id",
+        loader: ({ params }) => {
+          const { id } = params;
+          return fetch(`http://localhost:3000/users/${id}`);
+        },
+        element: <PartnerDetails />,
       },
     ],
   },

@@ -1,6 +1,9 @@
 import React from "react";
+import { Link } from "react-router";
 
 const PartnerCard = ({ partner }) => {
+  const id = partner._id;
+  console.log(id);
   return (
     <div className="card bg-base-200 shadow-md border border-base-300 rounded-xl overflow-hidden hover:shadow-xl transition-shadow duration-300 max-w-[350px] w-full">
       <figure className="px-4 pt-4">
@@ -17,12 +20,17 @@ const PartnerCard = ({ partner }) => {
           <span className="font-semibold">Mode:</span> {partner.studyMode}
         </p>
         <p className="text-sm">
-          <span className="font-semibold">Experience:</span> {partner.experienceLevel}
+          <span className="font-semibold">Experience:</span>{" "}
+          {partner.experienceLevel}
         </p>
         <div className="card-actions mt-3 w-full">
-          <button className="btn btn-primary btn-sm w-full rounded-full">
+          <Link
+            to={`/user/${id}`}
+            className="btn btn-primary btn-sm w-full rounded-full"
+          >
             View Profile
-          </button>
+          </Link>
+          <p>{id}</p>
         </div>
       </div>
     </div>
