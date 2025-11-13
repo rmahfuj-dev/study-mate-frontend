@@ -1,9 +1,16 @@
-import React from 'react'
+import React from "react";
+import Carousel from "./Caurosel";
+import TopStudyPartners from "./TopStudyPartner";
+import FAQ from "./FAQ";
 
 const Home = () => {
   return (
-    <div>Home</div>
-  )
-}
+    <div>
+      <Carousel />
+      <TopStudyPartners />
+      <FAQ />
+    </div>
+  );
+};
 
-export default Home
+export default Home;

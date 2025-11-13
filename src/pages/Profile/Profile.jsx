@@ -1,19 +1,20 @@
-import React, { useContext } from 'react';
-import { AuthContext } from '../../contexts/AuthContext/AuthContext';
+import React, { useContext } from "react";
+import { AuthContext } from "../../contexts/AuthContext/AuthContext";
 
 const Profile = () => {
   const { user } = useContext(AuthContext);
 
-  const name = user?.displayName || 'Anonymous';
-  const email = user?.email || 'No Email';
-  const profileImage = user?.photoURL || 'https://via.placeholder.com/150';
-  const phone = user?.phoneNumber || 'Not Provided';
-  const uid = user?.uid || 'N/A';
+  const name = user?.displayName || "Anonymous";
+  const email = user?.email || "No Email";
+  const profileImage =
+    user?.photoURL ||
+    "https://static.vecteezy.com/system/resources/thumbnails/020/765/399/small/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg";
+  const phone = user?.phoneNumber || "Not Provided";
+  const uid = user?.uid || "N/A";
 
   return (
     <div className="min-h-screen bg-base-200 flex flex-col items-center py-12 px-4">
       <div className="w-full max-w-4xl bg-base-100 shadow-xl rounded-2xl p-8 flex flex-col md:flex-row gap-8">
-        
         <div className="flex justify-center md:justify-start">
           <img
             src={profileImage}
@@ -28,17 +29,25 @@ const Profile = () => {
           <p className="text-sm text-base-content/70">Phone: {phone}</p>
           <p className="text-sm text-base-content/70">UID: {uid}</p>
 
-          <div className="mt-6">
-          </div>
+          <div className="mt-6"></div>
         </div>
       </div>
 
       <div className="w-full max-w-4xl mt-8 bg-base-100 shadow-lg rounded-xl p-6">
         <h2 className="text-xl font-semibold mb-4">Account Info</h2>
         <ul className="space-y-2 text-sm text-base-content/70">
-          <li><span className="font-semibold">Email Verified:</span> {user?.emailVerified ? 'Yes' : 'No'}</li>
-          <li><span className="font-semibold">Last Sign-in:</span> {user?.metadata?.lastSignInTime || 'N/A'}</li>
-          <li><span className="font-semibold">Account Created:</span> {user?.metadata?.creationTime || 'N/A'}</li>
+          <li>
+            <span className="font-semibold">Email Verified:</span>{" "}
+            {user?.emailVerified ? "Yes" : "No"}
+          </li>
+          <li>
+            <span className="font-semibold">Last Sign-in:</span>{" "}
+            {user?.metadata?.lastSignInTime || "N/A"}
+          </li>
+          <li>
+            <span className="font-semibold">Account Created:</span>{" "}
+            {user?.metadata?.creationTime || "N/A"}
+          </li>
         </ul>
       </div>
     </div>

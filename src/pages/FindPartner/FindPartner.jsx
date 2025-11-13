@@ -3,6 +3,7 @@ import PartnerCard from "./PartnerCard";
 import Sort from "./Sort";
 import Search from "./Search";
 import Loading from "../../components/Loading";
+import Container from "../../components/Container";
 
 const FindPartner = () => {
   const [partners, setPartners] = useState([]);
@@ -58,7 +59,9 @@ const FindPartner = () => {
       if (field === "rating") return b.rating - a.rating;
       if (field === "experienceLevel") {
         const levels = { Beginner: 1, Intermediate: 2, Advanced: 3 };
-        return (levels[b.experienceLevel] || 0) - (levels[a.experienceLevel] || 0);
+        return (
+          (levels[b.experienceLevel] || 0) - (levels[a.experienceLevel] || 0)
+        );
       }
       if (field === "patnerCount") return b.patnerCount - a.patnerCount;
       return 0;
@@ -67,7 +70,7 @@ const FindPartner = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-10">
+    <Container className="container mx-auto px-4 py-10">
       {/* Controls */}
       <div className="flex flex-col md:flex-row justify-between items-center mb-8 space-y-4 md:space-y-0">
         <div className="order-2 md:order-1">
@@ -94,7 +97,7 @@ const FindPartner = () => {
           )}
         </div>
       )}
-    </div>
+    </Container>
   );
 };
 

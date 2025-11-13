@@ -28,7 +28,6 @@ const Header = () => {
           Home
         </NavLink>
       </li>
-
       <li>
         <NavLink
           to="/find-partner"
@@ -40,7 +39,6 @@ const Header = () => {
           Find Partner
         </NavLink>
       </li>
-
       {!user ? null : (
         <>
           <li>
@@ -71,7 +69,7 @@ const Header = () => {
   );
 
   return (
-    <header className="shadow-sm bg-base-200">
+    <header className="shadow-xl bg-base-300">
       <div className="navbar px-4 justify-between">
         <div className="flex items-center gap-2">
           <Link to="/" className="flex items-center gap-2">
@@ -87,6 +85,43 @@ const Header = () => {
         </div>
 
         <div className="flex items-center gap-2">
+          {user && (
+            <div className="relative">
+              <img
+                src={
+                  user.photoURL ||
+                  "https://static.vecteezy.com/system/resources/thumbnails/020/765/399/small/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg"
+                }
+                alt="Profile"
+                className="w-10 h-10 rounded-full cursor-pointer border"
+                onClick={() => setProfileOpen(!profileOpen)}
+              />
+              {profileOpen && (
+                <ul className="absolute right-0 mt-2 w-40 p-2 shadow-lg rounded-lg bg-base-100 flex flex-col gap-2 z-50">
+                  <li>
+                    <NavLink
+                      to="/profile"
+                      className="hover:bg-base-200 px-2 py-1 rounded"
+                      onClick={() => setProfileOpen(false)}
+                    >
+                      Profile
+                    </NavLink>
+                  </li>
+                  <li>
+                    <button
+                      onClick={() => {
+                        handleLogout();
+                        setProfileOpen(false);
+                      }}
+                      className="btn btn-sm btn-error text-white w-full"
+                    >
+                      Logout
+                    </button>
+                  </li>
+                </ul>
+              )}
+            </div>
+          )}
           <div className="hidden lg:flex items-center gap-3">
             {!user ? (
               <div className="space-x-2">
@@ -97,40 +132,7 @@ const Header = () => {
                   Register
                 </NavLink>
               </div>
-            ) : (
-              <div className="relative">
-                <img
-                  src={user.photoURL || "/default-profile.png"}
-                  alt="Profile"
-                  className="w-10 h-10 rounded-full cursor-pointer"
-                  onClick={() => setProfileOpen(!profileOpen)}
-                />
-                {profileOpen && (
-                  <ul className="absolute right-0 mt-2 w-40 p-2 shadow-lg rounded-lg bg-base-100 flex flex-col gap-2 z-50">
-                    <li>
-                      <NavLink
-                        to="/profile"
-                        className="hover:bg-base-200 px-2 py-1 rounded"
-                        onClick={() => setProfileOpen(false)}
-                      >
-                        Profile
-                      </NavLink>
-                    </li>
-                    <li>
-                      <button
-                        onClick={() => {
-                          handleLogout();
-                          setProfileOpen(false);
-                        }}
-                        className="btn btn-sm btn-error text-white w-full"
-                      >
-                        Logout
-                      </button>
-                    </li>
-                  </ul>
-                )}
-              </div>
-            )}
+            ) : null}
             <ThemeToggle />
           </div>
 
@@ -185,6 +187,9 @@ const Header = () => {
                     </button>
                   </li>
                 )}
+                <li className="flex justify-center mt-2">
+                  <ThemeToggle />
+                </li>
               </ul>
             )}
           </div>

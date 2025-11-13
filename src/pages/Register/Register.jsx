@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { useNavigate, useLocation, Link } from "react-router";
 
 const Register = () => {
-  const { googleSignIn, createUserWithEmailPass, updateData } =
+  const { googleSignIn, createUserWithEmailPass, updateData, user } =
     useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
@@ -25,7 +25,6 @@ const Register = () => {
 
   const handleRegister = (userdata) => {
     const { email, name, password, profile } = userdata;
-    const data = { name, email };
 
     if (!passwordPattern.test(password)) {
       toast.error(
@@ -35,13 +34,13 @@ const Register = () => {
     }
 
     createUserWithEmailPass(email, password)
-      .then((res) => {
-        updateData(res.user, name, profile || "")
+      .then(() => {
+        updateData({ displayName: name, photoURL: profile || "" })
           .then(() => {
             fetch("http://localhost:3000/users", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(data),
+              body: JSON.stringify({ name, email }),
             })
               .then((res) => res.json())
               .then(() => {
@@ -67,7 +66,7 @@ const Register = () => {
         const name = displayName || "";
         const profile = photoURL || "";
 
-        updateData(res.user, name, profile)
+        updateData({ displayName: name, photoURL: profile })
           .then(() => {
             fetch("http://localhost:3000/users", {
               method: "POST",
@@ -89,7 +88,9 @@ const Register = () => {
       })
       .catch((err) => toast.error(err.message));
   };
-
+  if (user) {
+    navigate("/");
+  }
   return (
     <div>
       <Container className="flex w-full h-screen justify-center items-center flex-col gap-8">

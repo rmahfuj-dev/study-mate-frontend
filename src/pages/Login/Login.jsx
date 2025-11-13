@@ -7,7 +7,7 @@ import { useLocation, useNavigate } from "react-router";
 import { Link } from "react-router";
 
 const Login = () => {
-  const { googleSignIn, signInEmailPass } = useContext(AuthContext);
+  const { googleSignIn, signInEmailPass,user } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
@@ -45,7 +45,9 @@ const Login = () => {
       })
       .catch((err) => toast.error(err.message));
   };
-
+  if (user) {
+    navigate("/");
+  }
   return (
     <div>
       <Container className="flex w-full h-screen justify-center items-center flex-col gap-8">
@@ -79,7 +81,10 @@ const Login = () => {
               </span>
             )}
 
-            <Link to="/forget-password" className="text-sm text-right mt-2 text-blue-600 cursor-pointer">
+            <Link
+              to="/forget-password"
+              className="text-sm text-right mt-2 text-blue-600 cursor-pointer"
+            >
               Forget Password?
             </Link>
 
@@ -88,7 +93,10 @@ const Login = () => {
               value="Login"
               className="btn btn-neutral mt-4"
             />
-            <Link to="/register" className="text-center text-sm ">Don't have an account?<span className="text-blue-600">Register</span></Link>
+            <Link to="/register" className="text-center text-sm ">
+              Don't have an account?
+              <span className="text-blue-600">Register</span>
+            </Link>
           </fieldset>
         </form>
 

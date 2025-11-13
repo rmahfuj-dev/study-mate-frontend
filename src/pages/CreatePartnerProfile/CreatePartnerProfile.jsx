@@ -6,7 +6,7 @@ import { useComposedRefs } from "framer-motion";
 import { AuthContext } from "../../contexts/AuthContext/AuthContext";
 
 const CreatePartnerProfile = () => {
-  const{user}=useContext(AuthContext)
+  const { user } = useContext(AuthContext);
   const {
     register,
     handleSubmit,
@@ -83,6 +83,10 @@ const CreatePartnerProfile = () => {
             <span className="label-text font-medium">Profile Image URL</span>
             <input
               {...register("profileimage", { required: true })}
+              defaultValue={
+                user?.photoURL ||
+                "https://w7.pngwing.com/pngs/717/24/png-transparent-computer-icons-user-profile-user-account-avatar-heroes-silhouette-black-thumbnail.png"
+              }
               type="text"
               placeholder="Enter image URL"
               className="input input-bordered w-full"

@@ -29,7 +29,6 @@ const PartnerCard = ({ partner }) => {
           >
             View Profile
           </Link>
-          <p>{id}</p>
         </div>
       </div>
     </div>

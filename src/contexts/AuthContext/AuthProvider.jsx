@@ -37,6 +37,7 @@ const AuthProvider = ({ children }) => {
 
   // sign in with email and passwrod
   const signInEmailPass = (email, password) => {
+    setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
   // update profile

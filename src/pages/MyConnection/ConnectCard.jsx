@@ -2,7 +2,14 @@ import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../contexts/AuthContext/AuthContext";
 import Swal from "sweetalert2";
 
-const ConnectCard = ({ profileimage, subject, studyMode, email }) => {
+const ConnectCard = ({
+  profileimage,
+  subject,
+  studyMode,
+  email,
+  connections,
+  setConnections,
+}) => {
   const { user } = useContext(AuthContext);
   const userEmail = user.email;
 
@@ -56,6 +63,7 @@ const ConnectCard = ({ profileimage, subject, studyMode, email }) => {
           text: "Connection has been removed.",
           icon: "success",
         });
+        setConnections((prev) => prev.filter((conn) => conn.email !== email));
       } else {
         Swal.fire({
           title: "Error",
@@ -99,7 +107,7 @@ const ConnectCard = ({ profileimage, subject, studyMode, email }) => {
       const updateData = await updateRes.json();
 
       if (updateRes.ok) {
-        setPartnerName(newName); 
+        setPartnerName(newName);
         Swal.fire({
           title: "Updated!",
           text: "Partner name updated successfully.",
@@ -133,7 +141,9 @@ const ConnectCard = ({ profileimage, subject, studyMode, email }) => {
       />
 
       <div className="flex-1">
-        <h2 className="text-lg font-semibold text-base-content">{partnerName}</h2>
+        <h2 className="text-lg font-semibold text-base-content">
+          {partnerName}
+        </h2>
         <p className="text-sm text-base-content/70">
           <strong>Subject:</strong> {subject}
         </p>
