@@ -1,60 +1,55 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useLoaderData } from "react-router";
-import { toast } from "react-toastify";
 import { FaStar } from "react-icons/fa";
+import { toast } from "react-toastify";
+import Swal from "sweetalert2";
+import { AuthContext } from "../../contexts/AuthContext/AuthContext";
 
 const PartnerDetails = () => {
-  const partner = useLoaderData();
-  const [loading, setLoading] = useState(false);
-  const [partnerCount, setPartnerCount] = useState(partner.patnerCount || 0);
+  const { user } = useContext(AuthContext);
+  const loadedPartner = useLoaderData();
 
-  const handleSendRequest = async () => {
-    setLoading(true);
+  const [partner, setPartner] = useState(loadedPartner);
+
+  const handleAdd = async () => {
     try {
-      // Increment partner count
-      const resCount = await fetch(
-        `http://localhost:3000/partners/${partner._id}/increment`,
-        { method: "PATCH" }
-      );
-      if (!resCount.ok) throw new Error("Failed to update partner count");
-      const updatedPartner = await resCount.json();
-      setPartnerCount(updatedPartner.patnerCount);
+      const userEmail = user.email;
 
-      // Save partner request
-      const userEmail = localStorage.getItem("userEmail"); // logged-in user
-      const resRequest = await fetch("http://localhost:3000/partnerRequests", {
+      const res = await fetch("http://localhost:3000/connects/add", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          partnerId: partner._id,
-          partnerName: partner.name,
-          partnerEmail: partner.email,
-          requestedBy: userEmail,
-          requestedAt: new Date(),
-        }),
+        body: JSON.stringify({ userEmail, partnerEmail: partner.email }),
       });
-      if (!resRequest.ok) throw new Error("Failed to save request");
 
-      toast.success("Partner request sent successfully!");
+      const data = await res.json();
+
+      if (!res.ok) throw new Error(data.error || "Failed to add partner");
+
+      Swal.fire({
+        icon: "success",
+        title: "Request Sent",
+        text: "Partner request sent successfully!",
+        confirmButtonColor: "#22c55e",
+      });
+
+      setPartner((prev) => ({
+        ...prev,
+        partnerCount: (prev.partnerCount || 0) + 1,
+      }));
     } catch (err) {
-      console.error(err);
-      toast.error(err.message || "Something went wrong");
-    } finally {
-      setLoading(false);
+      toast.error(err.message);
     }
   };
 
   return (
     <div className="w-full min-h-screen bg-base-200 flex justify-center py-12">
       <div className="w-full max-w-5xl bg-base-100 rounded-xl shadow-lg p-8 md:p-12">
-        {/* Top Row: Profile Image + Name + Rating */}
         <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
           <img
             src={partner.profileimage}
             alt={partner.name}
             className="w-40 h-40 rounded-full border-4 border-primary object-cover shadow-md"
           />
-
           <div className="flex-1 flex flex-col">
             <h1 className="text-4xl font-bold text-base-content">{partner.name}</h1>
             <div className="flex items-center mt-2 gap-2">
@@ -71,11 +66,8 @@ const PartnerDetails = () => {
           </div>
         </div>
 
-        {/* Profile Details as List */}
         <div className="mt-10">
-          <h2 className="text-2xl font-semibold mb-4 text-base-content">
-            Profile Details
-          </h2>
+          <h2 className="text-2xl font-semibold mb-4 text-base-content">Profile Details</h2>
           <ul className="flex flex-col gap-3 text-base-content text-lg">
             <li>
               <span className="font-semibold">Subject:</span> {partner.subject}
@@ -93,22 +85,17 @@ const PartnerDetails = () => {
               <span className="font-semibold">Experience Level:</span> {partner.experienceLevel}
             </li>
             <li>
-              <span className="font-semibold">Partner Count:</span> {partnerCount}
+              <span className="font-semibold">Partner Count:</span> {partner.partnerCount}
             </li>
             <li>
               <span className="font-semibold">Email:</span> {partner.email}
             </li>
           </ul>
-        </div>
-
-        {/* Send Partner Request Button */}
-        <div className="mt-10 flex justify-center md:justify-start">
           <button
-            onClick={handleSendRequest}
-            disabled={loading}
-            className="btn btn-primary rounded-full px-10 py-4 text-lg shadow-md hover:shadow-lg transition"
+            onClick={handleAdd}
+            className="btn bg-primary w-fit px-3 py-1 rounded-md text-white mt-4"
           >
-            {loading ? "Sending..." : "Send Partner Request"}
+            Send Partner Request
           </button>
         </div>
       </div>

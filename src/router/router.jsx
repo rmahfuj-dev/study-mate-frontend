@@ -41,10 +41,10 @@ export const router = createBrowserRouter([
         element: <ForgetPass />,
       },
       {
-        path: "user/:id",
+        path: "partner/:id",
         loader: ({ params }) => {
           const { id } = params;
-          return fetch(`http://localhost:3000/users/${id}`);
+          return fetch(`http://localhost:3000/partner/${id}`);
         },
         element: <PartnerDetails />,
       },

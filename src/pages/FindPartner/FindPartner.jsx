@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import PartnerCard from "./PartnerCard";
 import Sort from "./Sort";
 import Search from "./Search";
@@ -10,74 +10,55 @@ const FindPartner = () => {
   const [sortBy, setSortBy] = useState("");
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const fetchAllPartners = async () => {
-      setLoading(true);
-      try {
-        const res = await fetch("http://localhost:3000/partners");
-        const data = await res.json();
-        setPartners(data);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchAllPartners();
-  }, []);
+  const controllerRef = useRef(null);
+  const debounceRef = useRef(null);
 
   useEffect(() => {
-    const handler = setTimeout(() => {
+    // Debounce: wait 500ms after last input change
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+
+    debounceRef.current = setTimeout(() => {
       fetchPartners(searchQuery, sortBy);
     }, 500);
 
-    return () => clearTimeout(handler);
+    return () => clearTimeout(debounceRef.current);
   }, [searchQuery, sortBy]);
 
   const fetchPartners = async (query = "", sortField = "") => {
+    // Cancel any previous ongoing fetch
+    if (controllerRef.current) controllerRef.current.abort();
+    const controller = new AbortController();
+    controllerRef.current = controller;
+
     setLoading(true);
     try {
-      let url = "";
-      if (query) {
-        url = `http://localhost:3000/partners/search?name=${query}`;
-      } else if (sortField) {
+      let url = "http://localhost:3000/partners";
+      if (query) url = `http://localhost:3000/partners/search?name=${query}`;
+      else if (sortField)
         url = `http://localhost:3000/partners/sort?sort=${sortField}&order=desc`;
-      } else {
-        url = "http://localhost:3000/partners";
-      }
 
-      const res = await fetch(url);
+      const res = await fetch(url, { signal: controller.signal });
+      if (!res.ok) throw new Error("Failed to fetch partners");
+
       let data = await res.json();
-
-      if (query && sortField) {
-        data = sortData(data, sortField);
-      }
-
+      if (query && sortField) data = sortData(data, sortField);
       setPartners(data);
     } catch (err) {
-      console.log(err);
+      if (err.name !== "AbortError") console.error(err);
     } finally {
       setLoading(false);
     }
   };
 
-  const handleSearch = (query) => {
-    setSearchQuery(query);
-  };
-
-  const handleSort = (value) => {
-    setSortBy(value);
-  };
+  const handleSearch = (query) => setSearchQuery(query);
+  const handleSort = (value) => setSortBy(value);
 
   const sortData = (data, field) => {
     const sorted = [...data].sort((a, b) => {
       if (field === "rating") return b.rating - a.rating;
       if (field === "experienceLevel") {
         const levels = { Beginner: 1, Intermediate: 2, Advanced: 3 };
-        return (
-          (levels[b.experienceLevel] || 0) - (levels[a.experienceLevel] || 0)
-        );
+        return (levels[b.experienceLevel] || 0) - (levels[a.experienceLevel] || 0);
       }
       if (field === "patnerCount") return b.patnerCount - a.patnerCount;
       return 0;
@@ -87,6 +68,7 @@ const FindPartner = () => {
 
   return (
     <div className="container mx-auto px-4 py-10">
+      {/* Controls */}
       <div className="flex flex-col md:flex-row justify-between items-center mb-8 space-y-4 md:space-y-0">
         <div className="order-2 md:order-1">
           <Sort onSortChange={handleSort} />
@@ -96,12 +78,13 @@ const FindPartner = () => {
         </div>
       </div>
 
+      {/* Results */}
       {loading ? (
         <div className="flex justify-center py-20">
           <Loading />
         </div>
       ) : (
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6 place-items-center">
           {partners.length ? (
             partners.map((partner) => (
               <PartnerCard key={partner._id} partner={partner} />

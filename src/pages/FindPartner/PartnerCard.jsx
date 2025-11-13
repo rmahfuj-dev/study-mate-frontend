@@ -3,7 +3,6 @@ import { Link } from "react-router";
 
 const PartnerCard = ({ partner }) => {
   const id = partner._id;
-  console.log(id);
   return (
     <div className="card bg-base-200 shadow-md border border-base-300 rounded-xl overflow-hidden hover:shadow-xl transition-shadow duration-300 max-w-[350px] w-full">
       <figure className="px-4 pt-4">
@@ -25,7 +24,7 @@ const PartnerCard = ({ partner }) => {
         </p>
         <div className="card-actions mt-3 w-full">
           <Link
-            to={`/user/${id}`}
+            to={`/partner/${id}`}
             className="btn btn-primary btn-sm w-full rounded-full"
           >
             View Profile

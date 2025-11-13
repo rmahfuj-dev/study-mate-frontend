@@ -88,6 +88,7 @@ const Login = () => {
               value="Login"
               className="btn btn-neutral mt-4"
             />
+            <Link to="/register" className="text-center text-sm ">Don't have an account?<span className="text-blue-600">Register</span></Link>
           </fieldset>
         </form>
 
