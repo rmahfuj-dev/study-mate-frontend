@@ -10,7 +10,7 @@ const MyConnections = () => {
   const { user } = useContext(AuthContext);
   const [connections, setConnections] = useState([]);
   const [loading, setLoading] = useState(true);
-
+console.log(connections)
   // Fetch all connections for the logged-in user
   useEffect(() => {
     const fetchConnections = async () => {
