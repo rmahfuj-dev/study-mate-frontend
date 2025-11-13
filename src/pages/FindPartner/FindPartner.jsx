@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import axios from "axios";
 import PartnerCard from "./PartnerCard";
 import Sort from "./Sort";
 import Search from "./Search";
@@ -11,7 +12,7 @@ const FindPartner = () => {
   const [sortBy, setSortBy] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const controllerRef = useRef(null);
+  const cancelTokenRef = useRef(null);
   const debounceRef = useRef(null);
 
   useEffect(() => {
@@ -26,26 +27,29 @@ const FindPartner = () => {
   }, [searchQuery, sortBy]);
 
   const fetchPartners = async (query = "", sortField = "") => {
-    // Cancel any previous ongoing fetch
-    if (controllerRef.current) controllerRef.current.abort();
-    const controller = new AbortController();
-    controllerRef.current = controller;
+    // Cancel previous request
+    if (cancelTokenRef.current) cancelTokenRef.current.cancel();
+
+    cancelTokenRef.current = axios.CancelToken.source();
 
     setLoading(true);
     try {
-      let url = "http://localhost:3000/partners";
-      if (query) url = `http://localhost:3000/partners/search?name=${query}`;
+      let url = "https://studymate-indol.vercel.app/partners";
+      if (query)
+        url = `https://studymate-indol.vercel.app/partners/search?name=${query}`;
       else if (sortField)
-        url = `http://localhost:3000/partners/sort?sort=${sortField}&order=desc`;
+        url = `https://studymate-indol.vercel.app/partners/sort?sort=${sortField}&order=desc`;
 
-      const res = await fetch(url, { signal: controller.signal });
-      if (!res.ok) throw new Error("Failed to fetch partners");
+      const response = await axios.get(url, {
+        cancelToken: cancelTokenRef.current.token,
+      });
 
-      let data = await res.json();
+      let data = response.data;
       if (query && sortField) data = sortData(data, sortField);
+
       setPartners(data);
     } catch (err) {
-      if (err.name !== "AbortError") console.error(err);
+      if (!axios.isCancel(err)) console.error(err);
     } finally {
       setLoading(false);
     }
@@ -63,7 +67,7 @@ const FindPartner = () => {
           (levels[b.experienceLevel] || 0) - (levels[a.experienceLevel] || 0)
         );
       }
-      if (field === "patnerCount") return b.patnerCount - a.patnerCount;
+      if (field === "partnerCount") return b.partnerCount - a.partnerCount;
       return 0;
     });
     return sorted;

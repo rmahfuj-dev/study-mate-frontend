@@ -37,7 +37,7 @@ const Register = () => {
       .then(() => {
         updateData({ displayName: name, photoURL: profile || "" })
           .then(() => {
-            fetch("http://localhost:3000/users", {
+            fetch("https://studymate-indol.vercel.app/users", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ name, email }),
@@ -68,7 +68,7 @@ const Register = () => {
 
         updateData({ displayName: name, photoURL: profile })
           .then(() => {
-            fetch("http://localhost:3000/users", {
+            fetch("https://studymate-indol.vercel.app/users", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ name, email }),

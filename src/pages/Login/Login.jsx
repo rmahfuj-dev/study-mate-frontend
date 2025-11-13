@@ -7,7 +7,7 @@ import { useLocation, useNavigate } from "react-router";
 import { Link } from "react-router";
 
 const Login = () => {
-  const { googleSignIn, signInEmailPass,user } = useContext(AuthContext);
+  const { googleSignIn, signInEmailPass, user } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
@@ -32,7 +32,7 @@ const Login = () => {
       .then((res) => {
         const { displayName: name, email } = res.user;
         const userData = { name, email };
-        fetch("http://localhost:3000/users", {
+        fetch("https://studymate-indol.vercel.app/users", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(userData),

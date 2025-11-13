@@ -9,7 +9,7 @@ const TopStudyPartners = () => {
     const fetchPartners = async () => {
       try {
         const res = await fetch(
-          "http://localhost:3000/partners/sort?sort=rating&order=desc"
+          "https://studymate-indol.vercel.app/partners/sort?sort=rating&order=desc"
         );
         const data = await res.json();
         setPartners(data.slice(0, 3)); // top 3 partners

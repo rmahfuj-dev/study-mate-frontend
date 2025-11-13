@@ -19,7 +19,9 @@ const ConnectCard = ({
   useEffect(() => {
     const fetchPartnerName = async () => {
       try {
-        const res = await fetch(`http://localhost:3000/connect/${email}`);
+        const res = await fetch(
+          `https://studymate-indol.vercel.app/connect/${email}`
+        );
         if (!res.ok) throw new Error("Failed to fetch partner name");
         const data = await res.json();
         setPartnerName(data.partnerName);
@@ -50,7 +52,7 @@ const ConnectCard = ({
 
     try {
       const res = await fetch(
-        `http://localhost:3000/connects/delete?userEmail=${userEmail}&partnerEmail=${email}`,
+        `https://studymate-indol.vercel.app/connects/delete?userEmail=${userEmail}&partnerEmail=${email}`,
         { method: "DELETE" }
       );
 
@@ -94,15 +96,18 @@ const ConnectCard = ({
     if (!newName) return;
 
     try {
-      const updateRes = await fetch(`http://localhost:3000/connects/update`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          userEmail,
-          partnerEmail: email,
-          partnerName: newName,
-        }),
-      });
+      const updateRes = await fetch(
+        `https://studymate-indol.vercel.app/connects/update`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            userEmail,
+            partnerEmail: email,
+            partnerName: newName,
+          }),
+        }
+      );
 
       const updateData = await updateRes.json();
 

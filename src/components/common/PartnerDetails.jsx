@@ -16,15 +16,18 @@ const PartnerDetails = () => {
     try {
       const userEmail = user.email;
 
-      const res = await fetch("http://localhost:3000/connects/add", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          userEmail,
-          partnerEmail: partner.email,
-          partnerName: partner.name,
-        }),
-      });
+      const res = await fetch(
+        "https://studymate-indol.vercel.app/connects/add",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            userEmail,
+            partnerEmail: partner.email,
+            partnerName: partner.name,
+          }),
+        }
+      );
 
       const data = await res.json();
 

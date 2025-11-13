@@ -16,11 +16,14 @@ const CreatePartnerProfile = () => {
 
   const onSubmit = async (data) => {
     try {
-      const res = await fetch("http://localhost:3000/create-profile", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, partnerCount: 0 }), // only partnerCount forced 0
-      });
+      const res = await fetch(
+        "https://studymate-indol.vercel.app/create-profile",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ...data, partnerCount: 0 }), // only partnerCount forced 0
+        }
+      );
 
       const responseData = await res.json();
 

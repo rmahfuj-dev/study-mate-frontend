@@ -1,16 +1,21 @@
-# React + Vite
+# StudyMate
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[Live Site](https://your-live-site-url.com)
 
-Currently, two official plugins are available:
+## Overview
+StudyMate is a modern web application designed to help students find and connect with study partners effortlessly. Built with **React**, **TailwindCSS**, and **Firebase**, it provides a seamless and responsive experience across devices. The platform allows users to create profiles, discover partners, and manage their connections with ease.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
+- **User Authentication:** Secure login and registration system using Firebase Authentication.  
+- **Partner Discovery:** Browse and connect with study partners based on your preferences.  
+- **Profile Management:** Create and edit your partner profile, including personal information and profile picture.  
+- **Connection Management:** View and manage your current study partner connections.  
+- **Dark Mode Support:** Toggle between light and dark themes with a responsive design.  
+- **Responsive Design:** Fully optimized for mobile, tablet, and desktop screens using TailwindCSS.  
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Tech Stack
+- **Frontend:** React, React Router, TailwindCSS, Framer Motion  
+- **Backend & Authentication:** Firebase  
+- **Form Handling:** React Hook Form  
+- **Notifications & Alerts:** React Toastify, SweetAlert2  
+- **HTTP Requests:** Axios  

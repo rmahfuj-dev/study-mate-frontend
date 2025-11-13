@@ -39,8 +39,8 @@ export const router = createBrowserRouter([
         element: <PrivateRoute />,
         children: [
           {
-            path:"profile",
-            element:<Profile />
+            path: "profile",
+            element: <Profile />,
           },
           {
             path: "create-partner",
@@ -54,7 +54,7 @@ export const router = createBrowserRouter([
             path: "partner/:id",
             loader: ({ params }) => {
               const { id } = params;
-              return fetch(`http://localhost:3000/partner/${id}`);
+              return fetch(`https://studymate-indol.vercel.app/partner/${id}`);
             },
             element: <PartnerDetails />,
           },
