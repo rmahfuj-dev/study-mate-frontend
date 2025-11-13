@@ -10,6 +10,7 @@ const PartnerDetails = () => {
   const loadedPartner = useLoaderData();
 
   const [partner, setPartner] = useState(loadedPartner);
+  console.log(partner);
 
   const handleAdd = async () => {
     try {
@@ -18,7 +19,11 @@ const PartnerDetails = () => {
       const res = await fetch("http://localhost:3000/connects/add", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userEmail, partnerEmail: partner.email }),
+        body: JSON.stringify({
+          userEmail,
+          partnerEmail: partner.email,
+          partnerName: partner.name,
+        }),
       });
 
       const data = await res.json();
@@ -51,7 +56,9 @@ const PartnerDetails = () => {
             className="w-40 h-40 rounded-full border-4 border-primary object-cover shadow-md"
           />
           <div className="flex-1 flex flex-col">
-            <h1 className="text-4xl font-bold text-base-content">{partner.name}</h1>
+            <h1 className="text-4xl font-bold text-base-content">
+              {partner.name}
+            </h1>
             <div className="flex items-center mt-2 gap-2">
               {[...Array(5)].map((_, i) => (
                 <FaStar
@@ -67,25 +74,32 @@ const PartnerDetails = () => {
         </div>
 
         <div className="mt-10">
-          <h2 className="text-2xl font-semibold mb-4 text-base-content">Profile Details</h2>
+          <h2 className="text-2xl font-semibold mb-4 text-base-content">
+            Profile Details
+          </h2>
           <ul className="flex flex-col gap-3 text-base-content text-lg">
             <li>
               <span className="font-semibold">Subject:</span> {partner.subject}
             </li>
             <li>
-              <span className="font-semibold">Study Mode:</span> {partner.studyMode}
+              <span className="font-semibold">Study Mode:</span>{" "}
+              {partner.studyMode}
             </li>
             <li>
-              <span className="font-semibold">Availability:</span> {partner.availabilityTime}
+              <span className="font-semibold">Availability:</span>{" "}
+              {partner.availabilityTime}
             </li>
             <li>
-              <span className="font-semibold">Location:</span> {partner.location}
+              <span className="font-semibold">Location:</span>{" "}
+              {partner.location}
             </li>
             <li>
-              <span className="font-semibold">Experience Level:</span> {partner.experienceLevel}
+              <span className="font-semibold">Experience Level:</span>{" "}
+              {partner.experienceLevel}
             </li>
             <li>
-              <span className="font-semibold">Partner Count:</span> {partner.partnerCount}
+              <span className="font-semibold">Partner Count:</span>{" "}
+              {partner.partnerCount}
             </li>
             <li>
               <span className="font-semibold">Email:</span> {partner.email}
