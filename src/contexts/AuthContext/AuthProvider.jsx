@@ -44,13 +44,14 @@ const AuthProvider = ({ children }) => {
     const currentUser = auth.currentUser;
     return updateProfile(currentUser, profileData);
   };
+
   const authData = {
     googleSignIn,
     user,
     loading,
     createUserWithEmailPass,
     signInEmailPass,
-    updateData
+    updateData,
   };
   return <AuthContext value={authData}>{children}</AuthContext>;
 };

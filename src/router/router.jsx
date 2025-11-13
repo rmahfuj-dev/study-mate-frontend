@@ -8,6 +8,9 @@ import CreatePartnerProfile from "../pages/CreatePartnerProfile/CreatePartnerPro
 import MyConnecton from "../pages/MyConnection/MyConnecton";
 import ForgetPass from "../pages/ForgetPass/ForgetPass";
 import PartnerDetails from "../components/common/PartnerDetails";
+import NotFound from "../pages/NotFound/NotFound";
+import PrivateRoute from "../PrivateRoute/PrivateRoute";
+import Profile from "../pages/Profile/Profile";
 
 export const router = createBrowserRouter([
   {
@@ -29,24 +32,37 @@ export const router = createBrowserRouter([
         element: <FindPartner />,
       },
       {
-        path: "create-partner",
-        element: <CreatePartnerProfile />,
-      },
-      {
-        path: "my-connections",
-        element: <MyConnecton />,
-      },
-      {
         path: "forget-password",
         element: <ForgetPass />,
       },
       {
-        path: "partner/:id",
-        loader: ({ params }) => {
-          const { id } = params;
-          return fetch(`http://localhost:3000/partner/${id}`);
-        },
-        element: <PartnerDetails />,
+        element: <PrivateRoute />,
+        children: [
+          {
+            path:"profile",
+            element:<Profile />
+          },
+          {
+            path: "create-partner",
+            element: <CreatePartnerProfile />,
+          },
+          {
+            path: "my-connections",
+            element: <MyConnecton />,
+          },
+          {
+            path: "partner/:id",
+            loader: ({ params }) => {
+              const { id } = params;
+              return fetch(`http://localhost:3000/partner/${id}`);
+            },
+            element: <PartnerDetails />,
+          },
+        ],
+      },
+      {
+        path: "*",
+        element: <NotFound />,
       },
     ],
   },

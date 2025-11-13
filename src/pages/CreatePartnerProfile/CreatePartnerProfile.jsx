@@ -165,7 +165,7 @@ const CreatePartnerProfile = () => {
             <input
               {...register("email")}
               type="email"
-              value={user.email}
+              value={user?.email}
               readOnly
               className="input input-bordered w-full bg-base-300 cursor-not-allowed"
             />
