@@ -24,7 +24,7 @@ const TopStudyPartners = () => {
   return (
     <section className="py-16 bg-base-100">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-bold text-center mb-12">
+        <h2 className="text-5xl font-bold text-center mb-12 text-primary">
           Top Study Partners
         </h2>
 

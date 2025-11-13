@@ -1,6 +1,6 @@
 # StudyMate
 
-[Live Site](https://your-live-site-url.com)
+[Live Site](https://study-mate-fc40c.web.app/)
 
 ## Overview
 StudyMate is a modern web application designed to help students find and connect with study partners effortlessly. Built with **React**, **TailwindCSS**, and **Firebase**, it provides a seamless and responsive experience across devices. The platform allows users to create profiles, discover partners, and manage their connections with ease.

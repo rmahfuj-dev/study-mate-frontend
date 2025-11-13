@@ -9,7 +9,7 @@ const FAQ = () => {
     >
       <div className="w-full max-w-6xl px-4">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-2">
+          <h2 className="text-3xl md:text-4xl font-bold mb-2 text-primary">
             Frequently Asked Questions
           </h2>
           <p className="text-base-content/70 max-w-xl mx-auto">

@@ -6,6 +6,7 @@ import { div } from "framer-motion/client";
 import ConnectCard from "./ConnectCard";
 import Container from "../../components/Container";
 import { Link } from "react-router";
+import Loading from "../../components/Loading";
 
 const MyConnections = () => {
   const { user } = useContext(AuthContext);
@@ -38,7 +39,7 @@ const MyConnections = () => {
     fetchConnections();
   }, []);
 
-  if (loading) return <p className="text-center mt-10">Loading...</p>;
+  if (loading) return <Loading />;
   if (connections.length == 0) {
     return (
       <div className="flex w-full h-screen justify-center items-center flex-col gap-4">
