@@ -3,6 +3,7 @@ import Carousel from "./Caurosel";
 import TopStudyPartners from "./TopStudyPartner";
 import FAQ from "./FAQ";
 import Reveiws from "./Reviews";
+import Newsletter from "./Newsletter";
 
 const Home = () => {
   return (
@@ -11,6 +12,7 @@ const Home = () => {
       <TopStudyPartners />
       <Reveiws />
       <FAQ />
+      <Newsletter />
     </div>
   );
 };

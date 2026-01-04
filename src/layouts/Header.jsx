@@ -69,7 +69,7 @@ const Header = () => {
   );
 
   return (
-    <header className="shadow-xl bg-base-300">
+    <header className="shadow-xl bg-base-300 sticky top-0 z-10 left-0 w-full">
       <div className="navbar px-4 justify-between">
         <div className="flex items-center gap-2">
           <Link to="/" className="flex items-center gap-2">

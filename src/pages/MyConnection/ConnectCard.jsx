@@ -138,7 +138,7 @@ const ConnectCard = ({
   if (!visible) return null;
 
   return (
-    <div className="bg-base-100 shadow-md rounded-xl p-4 flex flex-col md:flex-row items-center gap-4 border border-base-300 w-full">
+    <div className="bg-secondary shadow-md rounded-xl p-4 flex flex-col md:flex-row items-center gap-4 border border-base-300 w-full">
       <img
         src={profileimage}
         alt={partnerName}

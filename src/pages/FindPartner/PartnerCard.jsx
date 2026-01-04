@@ -4,7 +4,7 @@ import { Link } from "react-router";
 const PartnerCard = ({ partner }) => {
   const id = partner._id;
   return (
-    <div className="card bg-base-200 shadow-md border border-base-300 rounded-xl overflow-hidden hover:shadow-xl transition-shadow duration-300 max-w-[350px] w-full">
+    <div className="card bg-secondary shadow-md border border-base-300 rounded-xl overflow-hidden hover:shadow-xl transition-shadow duration-300 max-w-[350px] w-full">
       <figure className="px-4 pt-4">
         <img
           src={partner.profileimage}
